@@ -8,9 +8,7 @@
 <link rel="stylesheet" href="index.css">
 </head>
 <body>
-
 <div class="game-wrapper">
-
   <!-- ===================== CABEÇALHO / HUD ===================== -->
   <header class="hud" id="hud">
     <div class="hud-item">
@@ -34,11 +32,9 @@
       <span class="hud-value">🛡️</span>
     </div>
   </header>
-
   <!-- ===================== ÁREA DO JOGO ===================== -->
   <main class="game-area">
     <canvas id="gameCanvas"></canvas>
-
     <!-- Tela inicial -->
     <section class="overlay" id="startScreen">
       <div class="panel">
@@ -52,7 +48,6 @@
         <p class="footer-note">Em caso de emergência, ligue <strong>190</strong>. Central de Atendimento à Mulher: <strong>180</strong>.</p>
       </div>
     </section>
-
     <!-- Tela de pergunta -->
     <section class="overlay hidden" id="questionScreen">
       <div class="panel panel-question">
@@ -65,7 +60,6 @@
         </div>
       </div>
     </section>
-
     <!-- Tela de Game Over -->
     <section class="overlay hidden" id="gameOverScreen">
       <div class="panel">
@@ -79,17 +73,13 @@
         <button class="btn btn-primary" id="restartBtn">Jogar Novamente</button>
       </div>
     </section>
-
     <!-- Dica de toque para celular -->
     <div class="tap-hint hidden" id="tapHint">Toque para pular</div>
   </main>
-
   <footer class="game-footer">
     <p>Projeto educativo e sem fins lucrativos · Diga não à violência contra a mulher 💜</p>
   </footer>
-
 </div>
-
 <script src="index.js"></script>
 </body>
 </html>
