@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>Corrida pela Vida — Jogo de Conscientização</title>
+<meta name="description" content="Jogo educativo inspirado no Dino Game, sobre o combate à violência contra a mulher.">
+<link rel="stylesheet" href="index.css">
+</head>
+<body>
+
+<div class="game-wrapper">
+
+  <!-- ===================== CABEÇALHO / HUD ===================== -->
+  <header class="hud" id="hud">
+    <div class="hud-item">
+      <span class="hud-label">Pontos</span>
+      <span class="hud-value" id="scoreValue">0</span>
+    </div>
+    <div class="hud-item">
+      <span class="hud-label">Recorde</span>
+      <span class="hud-value" id="highscoreValue">0</span>
+    </div>
+    <div class="hud-item">
+      <span class="hud-label">Vidas</span>
+      <span class="hud-value" id="livesValue">❤❤❤</span>
+    </div>
+    <div class="hud-item">
+      <span class="hud-label">Velocidade</span>
+      <span class="hud-value" id="speedValue">x1.0</span>
+    </div>
+    <div class="hud-item" id="shieldIndicator" style="display:none;">
+      <span class="hud-label">Escudo</span>
+      <span class="hud-value">🛡️</span>
+    </div>
+  </header>
+
+  <!-- ===================== ÁREA DO JOGO ===================== -->
+  <main class="game-area">
+    <canvas id="gameCanvas"></canvas>
+
+    <!-- Tela inicial -->
+    <section class="overlay" id="startScreen">
+      <div class="panel">
+        <h1 class="title">💜 Corrida pela Vida</h1>
+        <p class="subtitle">Um jogo educativo sobre o combate à violência contra a mulher</p>
+        <p class="instructions">
+          Pressione <strong>Espaço</strong>, <strong>↑</strong> ou toque na tela para pular os obstáculos.<br>
+          A cada trecho da corrida, responda perguntas e ajude a espalhar informação que salva vidas.
+        </p>
+        <button class="btn btn-primary" id="startBtn">Iniciar Jogo</button>
+        <p class="footer-note">Em caso de emergência, ligue <strong>190</strong>. Central de Atendimento à Mulher: <strong>180</strong>.</p>
+      </div>
+    </section>
+
+    <!-- Tela de pergunta -->
+    <section class="overlay hidden" id="questionScreen">
+      <div class="panel panel-question">
+        <h2 class="question-title">📢 Pausa para Reflexão</h2>
+        <p class="question-text" id="questionText">Pergunta...</p>
+        <div class="options" id="optionsContainer"></div>
+        <div class="feedback hidden" id="feedbackBox">
+          <p id="feedbackText"></p>
+          <button class="btn btn-secondary" id="continueBtn">Continuar Corrida</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- Tela de Game Over -->
+    <section class="overlay hidden" id="gameOverScreen">
+      <div class="panel">
+        <h2 class="title">🎗️ Fim de Jogo</h2>
+        <p class="subtitle" id="finalScoreText">Pontuação: 0</p>
+        <p class="subtitle" id="newRecordText" style="display:none;">🏆 Novo recorde!</p>
+        <p class="instructions">
+          Lembre-se: você não está sozinha. Se precisar de ajuda, ligue <strong>180</strong> (Central de Atendimento à Mulher)
+          ou <strong>190</strong> (emergência policial).
+        </p>
+        <button class="btn btn-primary" id="restartBtn">Jogar Novamente</button>
+      </div>
+    </section>
+
+    <!-- Dica de toque para celular -->
+    <div class="tap-hint hidden" id="tapHint">Toque para pular</div>
+  </main>
+
+  <footer class="game-footer">
+    <p>Projeto educativo e sem fins lucrativos · Diga não à violência contra a mulher 💜</p>
+  </footer>
+
+</div>
+
+<script src="index.js"></script>
+</body>
+</html>
