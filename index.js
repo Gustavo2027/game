@@ -470,47 +470,149 @@ function drawPlayer() {
   }
   const blinking = state.invulnerableTimeLeft > 0 && Math.floor(state.invulnerableTimeLeft * 10) % 2 === 0;
   ctx.globalAlpha = blinking ? .35 : 1;
+
   const x = player.x;
   const y = player.y;
   const w = player.width;
   const h = player.height;
+  const legSwing = player.jumping ? .35 : Math.sin(player.runCycle) * .55;
+  const armSwing = player.jumping ? -.5 : Math.sin(player.runCycle + Math.PI) * .45;
+  const hairSwing = player.jumping ? -.3 : Math.sin(player.runCycle) * .35;
+  const bounce = player.jumping ? 0 : Math.abs(Math.sin(player.runCycle)) * 1.5;
+
+  const headCx = x + w * .5;
+  const headCy = y + h * .16 - bounce;
+  const headR = w * .27;
+  const neckY = headCy + headR * .8;
+
+  // ----- cabelo (atrás da cabeça, balançando ao correr) -----
   ctx.fillStyle = "#3b1f5c";
-  drawRoundedRect(x + w * .18, y + h * .28, w * .64, h * .5, 6);
-  ctx.fill();
-  ctx.fillStyle = "#ffd9c7";
   ctx.beginPath();
-  ctx.arc(x + w / 2, y + h * .16, w * .26, 0, Math.PI * 2);
+  ctx.moveTo(headCx - headR * .95, headCy - headR * .3);
+  ctx.quadraticCurveTo(
+    headCx - headR * 1.5 + hairSwing * 14, headCy + h * .32,
+    headCx - headR * .5 + hairSwing * 10, headCy + h * .42
+  );
+  ctx.quadraticCurveTo(headCx, headCy + headR * .9, headCx + headR * .5 - hairSwing * 10, headCy + h * .42);
+  ctx.quadraticCurveTo(
+    headCx + headR * 1.5 - hairSwing * 14, headCy + h * .32,
+    headCx + headR * .95, headCy - headR * .3
+  );
+  ctx.quadraticCurveTo(headCx, headCy - headR * 1.15, headCx - headR * .95, headCy - headR * .3);
+  ctx.closePath();
   ctx.fill();
-  ctx.fillStyle = "#6a3ea1";
-  ctx.beginPath();
-  ctx.arc(x + w / 2, y + h * .1, w * .28, Math.PI, 0);
-  ctx.fill();
-  ctx.strokeStyle = "#ff6fa5";
-  ctx.lineWidth = 3;
-  ctx.beginPath();
-  ctx.moveTo(x + w * .5, y + h * .36);
-  ctx.lineTo(x + w * .42, y + h * .5);
-  ctx.moveTo(x + w * .5, y + h * .36);
-  ctx.lineTo(x + w * .58, y + h * .5);
-  ctx.stroke();
-  ctx.strokeStyle = "#3b1f5c";
+
+  // ----- pernas (por baixo do vestido) -----
+  ctx.strokeStyle = "#ffd9c7";
   ctx.lineWidth = 6;
   ctx.lineCap = "round";
-  const legSwing = player.jumping ? .3 : Math.sin(player.runCycle) * .5;
   ctx.beginPath();
-  ctx.moveTo(x + w * .35, y + h * .78);
-  ctx.lineTo(x + w * .35 - legSwing * 12, y + h * 1);
-  ctx.moveTo(x + w * .65, y + h * .78);
-  ctx.lineTo(x + w * .65 + legSwing * 12, y + h * 1);
+  ctx.moveTo(x + w * .42, y + h * .72);
+  ctx.lineTo(x + w * .42 - legSwing * 12, y + h * 1);
+  ctx.moveTo(x + w * .58, y + h * .72);
+  ctx.lineTo(x + w * .58 + legSwing * 12, y + h * 1);
   ctx.stroke();
+
+  // sapatos
+  ctx.fillStyle = "#ff6fa5";
+  ctx.beginPath();
+  ctx.ellipse(x + w * .42 - legSwing * 12, y + h * 1, 5, 3, 0, 0, Math.PI * 2);
+  ctx.ellipse(x + w * .58 + legSwing * 12, y + h * 1, 5, 3, 0, 0, Math.PI * 2);
+  ctx.fill();
+
+  // ----- vestido (corpo, formato triangular feminino) -----
+  ctx.fillStyle = "#ff6fa5";
+  ctx.beginPath();
+  ctx.moveTo(headCx - w * .16, neckY);
+  ctx.lineTo(headCx + w * .16, neckY);
+  ctx.quadraticCurveTo(x + w * .78, y + h * .55, x + w * .74, y + h * .78);
+  ctx.lineTo(x + w * .26, y + h * .78);
+  ctx.quadraticCurveTo(x + w * .22, y + h * .55, headCx - w * .16, neckY);
+  ctx.closePath();
+  ctx.fill();
+
+  // cinto na cintura
+  ctx.strokeStyle = "#3b1f5c";
+  ctx.lineWidth = 2.5;
+  ctx.beginPath();
+  ctx.moveTo(x + w * .3, y + h * .56);
+  ctx.lineTo(x + w * .7, y + h * .56);
+  ctx.stroke();
+
+  // ----- braços -----
+  ctx.strokeStyle = "#ffd9c7";
   ctx.lineWidth = 5;
-  const armSwing = player.jumping ? -.4 : Math.sin(player.runCycle + Math.PI) * .4;
+  ctx.lineCap = "round";
   ctx.beginPath();
-  ctx.moveTo(x + w * .2, y + h * .4);
-  ctx.lineTo(x + w * .2 - armSwing * 10, y + h * .62);
-  ctx.moveTo(x + w * .8, y + h * .4);
-  ctx.lineTo(x + w * .8 + armSwing * 10, y + h * .62);
+  ctx.moveTo(x + w * .28, y + h * .42);
+  ctx.lineTo(x + w * .28 - armSwing * 10, y + h * .62);
+  ctx.moveTo(x + w * .72, y + h * .42);
+  ctx.lineTo(x + w * .72 + armSwing * 10, y + h * .62);
   ctx.stroke();
+
+  // ----- cabeça / rosto -----
+  ctx.fillStyle = "#ffd9c7";
+  ctx.beginPath();
+  ctx.arc(headCx, headCy, headR, 0, Math.PI * 2);
+  ctx.fill();
+
+  // franja / topo do cabelo
+  ctx.fillStyle = "#3b1f5c";
+  ctx.beginPath();
+  ctx.arc(headCx, headCy - headR * .15, headR * 1.02, Math.PI, 0);
+  ctx.fill();
+
+  // laço no cabelo
+  ctx.fillStyle = "#ff6fa5";
+  ctx.save();
+  ctx.translate(headCx + headR * .8, headCy - headR * .55);
+  ctx.rotate(hairSwing * .5);
+  ctx.beginPath();
+  ctx.moveTo(-6, 0);
+  ctx.lineTo(-1, -5);
+  ctx.lineTo(-1, 5);
+  ctx.closePath();
+  ctx.moveTo(6, 0);
+  ctx.lineTo(1, -5);
+  ctx.lineTo(1, 5);
+  ctx.closePath();
+  ctx.fill();
+  ctx.beginPath();
+  ctx.arc(0, 0, 2.2, 0, Math.PI * 2);
+  ctx.fill();
+  ctx.restore();
+
+  // sobrancelha e cílios (expressão simples e amigável)
+  ctx.strokeStyle = "#3b1f5c";
+  ctx.lineWidth = 1.6;
+  ctx.beginPath();
+  ctx.moveTo(headCx - headR * .32, headCy - headR * .18);
+  ctx.lineTo(headCx - headR * .08, headCy - headR * .22);
+  ctx.moveTo(headCx + headR * .08, headCy - headR * .22);
+  ctx.lineTo(headCx + headR * .32, headCy - headR * .18);
+  ctx.stroke();
+
+  // olhos
+  ctx.fillStyle = "#3b1f5c";
+  ctx.beginPath();
+  ctx.arc(headCx - headR * .32, headCy, 2.4, 0, Math.PI * 2);
+  ctx.arc(headCx + headR * .32, headCy, 2.4, 0, Math.PI * 2);
+  ctx.fill();
+
+  // bochechas
+  ctx.fillStyle = "rgba(255,111,165,0.45)";
+  ctx.beginPath();
+  ctx.arc(headCx - headR * .55, headCy + headR * .25, 3.5, 0, Math.PI * 2);
+  ctx.arc(headCx + headR * .55, headCy + headR * .25, 3.5, 0, Math.PI * 2);
+  ctx.fill();
+
+  // sorriso
+  ctx.strokeStyle = "#c94b7a";
+  ctx.lineWidth = 1.6;
+  ctx.beginPath();
+  ctx.arc(headCx, headCy + headR * .3, headR * .35, 0.15, Math.PI - 0.15);
+  ctx.stroke();
+
   ctx.restore();
 }
 
