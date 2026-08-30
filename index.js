@@ -1,6 +1,7 @@
 const CONFIG = {
   GRAVITY: 2400,
   JUMP_FORCE: 820,
+  FAST_FALL_FORCE: 1400,   // NOVO: velocidade mínima de queda ao tocar de novo no ar
   BASE_SPEED: 320,
   MAX_SPEED: 780,
   SPEED_PER_POINT: .35,
@@ -80,17 +81,17 @@ const QUESTION_BANK = [ {
   explanationCorrect: "Exato! Ameaças, humilhações, controle e manipulação causam danos emocionais profundos e são reconhecidos por lei como violência.",
   explanationWrong: "Sim! A Lei Maria da Penha reconhece a violência psicológica — humilhação, ameaça e controle — como uma forma grave de violência."
 }, {
-  question: "Qual é o telefone da Central de Atendimento à Mulher?",
-  options: [ "190", "180", "100", "156" ],
-  correctIndex: 1,
-  explanationCorrect: "Correto! O 180 oferece orientação, acolhimento e encaminhamento para mulheres em situação de violência, 24h por dia.",
-  explanationWrong: "O número correto é o 180 — Central de Atendimento à Mulher, disponível 24 horas para orientação e denúncia."
+ question: "Qual lei classifica o feminicídio como crime hediondo no Brasil?",
+  options: [ "Lei 13.104/2015", "Lei 8.069/1990", "Lei 9.099/1995", "Lei 10.406/2002" ],
+  correctIndex: 0,
+  explanationCorrect: "Correto! A Lei 13.104/2015 alterou o Código Penal para incluir o feminicídio como qualificadora do homicídio e crime hediondo.",
+  explanationWrong: "A resposta certa é a Lei 13.104/2015, conhecida como Lei do Feminicídio, que tornou o crime hediondo e aumentou as penas."
 }, {
-  question: "Em situação de emergência, qual número deve ser acionado?",
-  options: [ "180", "192", "190", "181" ],
-  correctIndex: 2,
-  explanationCorrect: "Isso! O 190 aciona a Polícia Militar para atendimento imediato em situações de risco.",
-  explanationWrong: "O número certo é o 190, para acionar a polícia em casos de emergência e risco imediato."
+ question: "Quais tipos de violência doméstica a Lei Maria da Penha reconhece?",
+  options: [ "Apenas física e sexual", "Física, psicológica, sexual, patrimonial e moral", "Somente psicológica", "Apenas verbal" ],
+  correctIndex: 1,
+  explanationCorrect: "Isso mesmo! A lei prevê cinco tipos: física, psicológica, sexual, patrimonial e moral, todas igualmente graves.",
+  explanationWrong: "A Lei Maria da Penha reconhece cinco tipos de violência: física, psicológica, sexual, patrimonial e moral."
 }, {
   question: "A denúncia pode salvar vidas?",
   options: [ "Não, denunciar não muda nada", "Sim, denunciar pode interromper um ciclo de violência", "Só a vítima pode denunciar", "Denúncias nunca são levadas a sério" ],
@@ -232,6 +233,9 @@ function jump() {
     player.vy = -CONFIG.JUMP_FORCE;
     player.jumping = true;
     sfx.jump();
+  } else {
+    // Já está no ar: acelera a descida (fast fall) para poder pular de novo mais rápido
+    player.vy = Math.max(player.vy, CONFIG.FAST_FALL_FORCE);
   }
 }
 
