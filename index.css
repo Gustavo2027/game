@@ -34,9 +34,7 @@ html, body {
   user-select: none;
 }
 
-/* =========================================================
-   ESTRUTURA GERAL
-   ========================================================= */
+
 .game-wrapper {
   display: flex;
   flex-direction: column;
@@ -97,7 +95,7 @@ html, body {
 }
 
 /* =========================================================
-   ÁREA DO JOGO / CANVAS
+   ÁREA DO JOGO 
    ========================================================= */
 .game-area {
   position: relative;
@@ -211,9 +209,7 @@ canvas#gameCanvas {
   border-radius: 10px;
 }
 
-/* =========================================================
-   BOTÕES
-   ========================================================= */
+
 .btn {
   border: none;
   cursor: pointer;
