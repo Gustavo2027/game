@@ -3,7 +3,7 @@ const CONFIG = {
   JUMP_FORCE: 820,
   FAST_FALL_FORCE: 1400,   // NOVO: velocidade mínima de queda ao tocar de novo no ar
   BASE_SPEED: 320,
-  MAX_SPEED: 780,
+  MAX_SPEED: 576,
   SPEED_PER_POINT: .35,
   SCORE_RATE: 8,
   QUESTION_INTERVAL: 300,
